@@ -26,5 +26,69 @@
  * @returns {string} "weak", "medium", "strong", or "very strong"
  */
 export function checkPasswordStrength(password) {
-  // Your code here
+    if (typeof password !== 'string' || !password || !password?.trim()) return 'weak';
+
+    let count = 0;
+    if (lengthValidation(password, 8)) count++;
+    if (isContainsUppercaseCharacter(password)) count++;
+    if (isContainsLowercaseCharacter(password)) count++;
+    if (isContainsNumber(password)) count++;
+    if (isContainsSpecialCharacter(password)) count++;
+
+    if (count === 5) {
+        return 'very strong';
+    } else if (count === 4) {
+        return 'strong';
+    } else if (count >= 2) {
+        return 'medium';
+    } else {
+        return 'weak';
+    }
+}
+
+
+const lengthValidation = (str, expLength) => {
+    return str.length >= expLength;
+}
+
+const isContainsUppercaseCharacter = (str) => {
+    for (const ch of str) {
+        if (ch >= 'A' && ch <= 'Z') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+const isContainsLowercaseCharacter = (str) => {
+    for (const ch of str) {
+        if (ch >= 'a' && ch <= 'z') {
+           return true;
+        }
+    }
+
+    return false;
+}
+
+const isContainsNumber = (str) => {
+    for (const ch of str) {
+        if (ch >= '0' && ch <= '9') {
+           return true;
+        }
+    }
+
+    return false;
+}
+
+const isContainsSpecialCharacter = (str) => {
+    const specialStr = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+    for (const ch of str) {
+        if (specialStr.includes(ch)) {
+            return true;
+        }
+    }
+
+    return false;
 }
